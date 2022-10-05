@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> 
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+  <title>Admin Login</title>
+
+</head>
+
+<body>
+  <div class="background"></div>
+  <div class="container">
+    <h2>Login</h2>
+    <form action="{{ url_for('login') }}" method="post">
+
+      <div class="form-item">
+        <span class="material-icons-outlined">
+          account_circle
+        </span>
+        <input type="text" name="code" id="code" placeholder="code">
+      </div>
+
+      <div class="form-item">
+        <span class="material-icons-outlined">
+          lock
+        </span>
+        <input type="password" name="password" id="password" placeholder="password">
+      </div>
+
+      <div>
+        {{ captcha() }}
+      </div>
+
+      <div class="form-item">
+        <input type="text" name="captcha" id="captcha" placeholder="captcha">
+      </div>
+
+      <button type="submit">LOGIN</button>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+                <div class= "{{ category }}">
+                  <span class="closebtn">&times;</span> 
+                  <p><span class="material-icons-outlined">
+                    error
+                  </span>
+                  {{ message }}</p>
+                  {% endfor %}
+                </div>
+        {% endif %}
+      {% endwith %}
+      <script>
+        var close = document.getElementsByClassName("closebtn");
+        var i;
+        
+        for (i = 0; i < close.length; i++) {
+          close[i].onclick = function(){
+            var div = this.parentElement;
+            div.style.opacity = "0";
+            setTimeout(function(){ div.style.display = "none"; }, 600);
+          }
+        }
+        </script>
+    </form>
+  </div>
+</body>
+
+</html>
